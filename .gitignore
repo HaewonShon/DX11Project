@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# others
+*.suo
+*.db
+*.ipch
+*.ico
+*.rc
+*.user
