@@ -16,7 +16,7 @@ std::ostream& operator<<(std::ostream& os, DirectX::FXMVECTOR v)
 }
 
 
-void DirectXMathTestFunc()
+void DirectXVectorFuncs()
 {
 	// use XMVECTOR to variables & calculation
 	DirectX::XMVECTOR vector = { 1, 2, 3 };
@@ -76,5 +76,45 @@ void DirectXMathTestFunc()
 																	  // returns vec2 - perpendicular to vec3, vec4
 	bool isEqual = DirectX::XMVector3Equal(vec1, vec2);
 	bool isNotEqual = DirectX::XMVector3NotEqual(vec1, vec2);
+}
+
+void DirectXMatrixFuncs()
+{
+	// declaration
+	DirectX::XMMATRIX matrix;
+
+	matrix = DirectX::XMMatrixIdentity();	// return identity matrix
+
+	bool isIdentity = DirectX::XMMatrixIsIdentity(matrix);	// return if matrix is identity or not
+	
+	matrix = DirectX::XMMatrixMultiply(matrix, matrix);	// matrix multiply
+	matrix = DirectX::XMMatrixTranspose(matrix);
+
+	DirectX::XMVECTOR vector = DirectX::XMMatrixDeterminant(matrix); //return determinant of the matrix
+
+	matrix = DirectX::XMMatrixInverse(&vector, matrix); // return inverse matrix with vector-(det of matrix), matrix
+
 
 }
+
+void DirectXTransformations()
+{
+	DirectX::XMMATRIX matrix = DirectX::XMMatrixScaling(1.f, 1.f, 1.f); // return scaling matrix
+
+	float angle = DirectX::XM_PI;
+	matrix = DirectX::XMMatrixRotationX(angle); // clockwise rotation by angle
+
+	DirectX::XMVECTOR axis = { 1.f, 1.f, 1.f };
+	matrix = DirectX::XMMatrixRotationAxis(axis, angle);  // clockwise rotation about axis by angle
+
+	matrix = DirectX::XMMatrixTranslation(1.f, 1.f, 1.f);
+	matrix = DirectX::XMMatrixTranslationFromVector(axis); // translation by vector amount
+	
+	DirectX::XMVECTOR vector = DirectX::XMVector3Transform(axis, matrix); // matrix multiplication with vector(axis)
+
+	// NOTE : THESE TWO FUNCTION USES FIXED W VALUE FOR VECTOR
+	vector = DirectX::XMVector3TransformCoord(vector, matrix); // vector-matrix product vM with v_w = 1 (point)
+	vector = DirectX::XMVector3TransformNormal(vector, matrix); // vector-matrix product vM with v_w = 0 (vector)
+
+
+}	
