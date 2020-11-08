@@ -38,3 +38,6 @@
 *.ico
 *.rc
 *.user
+
+WinMain_1/Debug/
+WinMain_1/WinMain_1/Debug/
