@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <string>
 
 //static bool isRunning = true;
 
@@ -69,17 +70,32 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 ********************************/
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	static std::wstring title;
 	switch (msg)
 	{
 	case WM_CLOSE: // window message
 		PostQuitMessage(12);
 		break;
-	case WM_KEYDOWN:
+	case WM_KEYDOWN: // keydown
 		if (wParam == 'F')
 		{
 			// set window name
 			SetWindowText(hWnd, L"respond to F");
 		}
+		break;
+	case WM_KEYUP:
+		if (wParam == 'F')
+		{
+			SetWindowText(hWnd, L"zz");
+		}
+		break;
+	case WM_CHAR:  // character key input, distinguish lower/uppercase depending state of shift.
+		title.push_back((char)wParam);
+		SetWindowText(hWnd, title.c_str());
+		break;
+	case WM_LBUTTONDOWN:
+		POINTS mousePos = MAKEPOINTS(lParam);
+		SetWindowText(hWnd, ( L"x : " + std::to_wstring(mousePos.x) + L", y : " + std::to_wstring(mousePos.y) ).c_str());
 		break;
 	}
 	return DefWindowProc(hWnd, msg, wParam, lParam);
