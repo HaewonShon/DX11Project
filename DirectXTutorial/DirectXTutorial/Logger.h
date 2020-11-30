@@ -8,6 +8,7 @@
 #include <fstream> // ofstream
 #include <string>
 #include <chrono> // time related
+#include "CustomException.h"
 
 class Logger
 {
